@@ -35,7 +35,7 @@ app.post('/api/auth/google', async (req, res) => {
     idToken: token,
     audience: CLIENT_ID,
   });
-  const { name, email, picture } = ticket.getPayload();
+  const { name, email, picture, sub } = ticket.getPayload();
   // const user = await db.user.upsert({
   //   where: { email: email },
   //   update: { name, picture },
