@@ -24,6 +24,7 @@ const registerUser = (req, res) => {
     } else {
       console.log(req.body);
       const newUser = new User({
+        User_Type: req.body.formInput.userType,
         User_Email: req.body.formInput.email,
         User_FirstName: req.body.formInput.firstName,
         User_LastName: req.body.formInput.lastName,
@@ -88,6 +89,7 @@ const loginUserByGoogle = async (req, res) => {
       email: email,
       firstName: given_name,
       lastName: family_name,
+      picture: picture,
     };
     if (userInfo) {
       userInfo.User_FirstName = given_name;
@@ -97,13 +99,13 @@ const loginUserByGoogle = async (req, res) => {
         .then((success) => {
           console.log(userInfo);
           const token = signToken(payload, 600);
+
           let userData = userInfo;
           delete userData.password;
-
           return res.status(204).json({
             success: true,
             token: 'Bearer ' + token,
-            userData,
+            payload,
           });
         })
         .catch((err) => {
@@ -112,30 +114,13 @@ const loginUserByGoogle = async (req, res) => {
             .json({ response: 'Server failed to update name' });
         });
     } else {
-      const newUser = new User({
-        User_Email: email,
-        User_FirstName: given_name,
-        User_LastName: family_name,
-        User_GoogleId: sub,
+      console.log(payload);
+      const token = signToken(payload, 600);
+      return res.status(201).json({
+        success: true,
+        token: 'Bearer ' + token,
+        payload,
       });
-
-      newUser
-        .save()
-        .then((success) => {
-          console.log(newUser);
-          const token = signToken(payload, 600);
-          let userData = userInfo;
-          delete userData.password;
-
-          return res.status(201).json({
-            success: true,
-            token: 'Bearer ' + token,
-            userData,
-          });
-        })
-        .catch((err) => {
-          return res.status(500).json({ response: 'Internal server error' });
-        });
     }
   });
 };
