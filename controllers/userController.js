@@ -27,6 +27,8 @@ const registerUser = (req, res) => {
         User_FirstName: req.body.first_name,
         User_LastName: req.body.last_name,
         User_Password: req.body.password,
+        User_Phone: req.body.phone,
+        User_EmergencyPhone: req.body.emergencyPhone,
       });
       newUser
         .save()
@@ -42,9 +44,9 @@ const registerUser = (req, res) => {
 };
 
 const loginUser = (req, res) => {
-  // const { errors, validation } = validateLoginInput(req.body);
+  const { errors, validation } = validateLoginInput(req.body);
 
-  // if (!validation) return res.status(400).json(errors);
+  if (!validation) return res.status(400).json(errors);
 
   const { email, password } = req.body;
 
