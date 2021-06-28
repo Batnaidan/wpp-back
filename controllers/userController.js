@@ -14,21 +14,22 @@ const CLIENT_ID =
 const client = new OAuth2Client(CLIENT_ID);
 
 const registerUser = (req, res) => {
-  const { errors, validation } = validateRegisterInput(req.body);
+  // const { errors, validation } = validateRegisterInput(req.body);
 
-  if (!validation) return res.status(400).json(errors);
+  // if (!validation) return res.status(400).json(errors);
 
   User.findOne({ User_Email: req.body.email }).then((userInfo) => {
     if (userInfo) {
       return res.status(400).json({ response: 'Email already exists' });
     } else {
+      console.log(req.body);
       const newUser = new User({
-        User_Email: req.body.email,
-        User_FirstName: req.body.first_name,
-        User_LastName: req.body.last_name,
+        User_Email: req.body.formInput.email,
+        User_FirstName: req.body.formInput.firstName,
+        User_LastName: req.body.formInput.lastName,
         User_Password: req.body.password,
-        User_Phone: req.body.phone,
-        User_EmergencyPhone: req.body.emergencyPhone,
+        User_Phone: req.body.formInput.phone,
+        User_EmergencyPhone: req.body.formInput.emergencyPhone,
       });
       newUser
         .save()
