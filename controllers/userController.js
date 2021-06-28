@@ -114,11 +114,9 @@ const loginUserByGoogle = async (req, res) => {
             .json({ response: 'Server failed to update name' });
         });
     } else {
-      console.log(payload);
-      const token = signToken(payload, 600);
       return res.status(201).json({
         success: true,
-        token: 'Bearer ' + token,
+        isRegistered: false,
         payload,
       });
     }
