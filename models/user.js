@@ -18,16 +18,43 @@ const UserSchema = new Schema(
     User_Password: {
       type: String,
     },
-    User_Bio: {
-      type: String,
-    },
     User_Phone: {
-      type: String,
+      type: Number,
+    },
+    User_EmergencyPhone: {
+      type: Number,
     },
     User_GoogleId: {
       type: String,
     },
     User_FacebookId: {
+      type: String,
+    },
+    User_Type: {
+      type: String,
+    },
+    User_Office: {
+      type: String,
+    },
+    User_SubOffice: {
+      type: String,
+    },
+    User_BagHoroo: {
+      type: String,
+    },
+    User_Horoolol: {
+      type: String,
+    },
+    User_Hothon: {
+      type: String,
+    },
+    User_Bair: {
+      type: String,
+    },
+    User_Orts: {
+      type: String,
+    },
+    User_Toot: {
       type: String,
     },
   },
